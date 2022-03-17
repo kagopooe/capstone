@@ -3,13 +3,16 @@ const cors = require("cors");
 const dotenv = require("dotenv")
 const mongoose = require('mongoose');
 const app = express();
+const database = require('./app/models/index')
 
 dotenv.config()
 
-app.use(cors());
+app.use(cors())
 
 // parse requests of content-type - application/json
 app.use(express.json());
+
+
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
@@ -35,7 +38,7 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-function initial() {
+async function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
@@ -70,3 +73,5 @@ function initial() {
     }
   });
 }
+
+const Role = db.role
