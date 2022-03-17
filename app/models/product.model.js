@@ -29,13 +29,12 @@ const Product = mongoose.model(
             type: Number,
             required: true,
             min: 5
-        },
-        date: { 
-            type: Date,
-            default: Date.now
-        },
+        }
 
-    })
+    },
+    {timestamps: true}
+    )
+    
 );
 
 module.exports = Product;

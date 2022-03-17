@@ -1,5 +1,6 @@
-const User = require('../models/user.model');
-const Role = require('../models/role.model')
+const db = require("../models")
+const User = db.user;
+const Role = db.role;
 
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcryptjs");
@@ -10,7 +11,6 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
     phone_number: req.body.phone_number,
-
   });
 
   user.save((err, user) => {
@@ -22,7 +22,7 @@ exports.signup = (req, res) => {
     if (req.body.roles) {
       Role.find(
         {
-          name: { $in: req.body.roles }
+          name: { $in: req.body.roles },
         },
         (err, roles) => {
           if (err) {
@@ -30,8 +30,8 @@ exports.signup = (req, res) => {
             return;
           }
 
-          user.roles = roles.map(role => role._id);
-          user.save(err => {
+          user.roles = roles.map((role) => role._id);
+          user.save((err) => {
             if (err) {
               res.status(500).send({ message: err });
               return;
@@ -49,7 +49,7 @@ exports.signup = (req, res) => {
         }
 
         user.roles = [role._id];
-        user.save(err => {
+        user.save((err) => {
           if (err) {
             res.status(500).send({ message: err });
             return;
@@ -64,7 +64,7 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
   User.findOne({
-    username: req.body.username
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -85,12 +85,12 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "Invalid Password!",
         });
       }
 
       let token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
-        expiresIn: 86400 // 24 hours
+        expiresIn: 86400, // 24 hours
       });
 
       let authorities = [];
@@ -104,7 +104,7 @@ exports.signin = (req, res) => {
         email: user.email,
         phone_number: user.phone_number,
         roles: authorities,
-        accessToken: token
+        accessToken: token,
       });
     });
 };
