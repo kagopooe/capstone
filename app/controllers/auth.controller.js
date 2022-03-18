@@ -1,6 +1,8 @@
-const db = require("../models")
+const db = require("../models");
 const User = db.user;
 const Role = db.role;
+const nodemailer = require("../config/email.config");
+// const {sendConfirmationEmail} = require("../config/email.config")
 
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcryptjs");
@@ -57,6 +59,9 @@ exports.signup = (req, res) => {
 
           res.send({ message: "User was registered successfully!" });
         });
+        nodemailer.sendConfirmationEmail(
+          user.fullname,
+          user.email );
       });
     }
   });

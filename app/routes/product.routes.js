@@ -1,5 +1,4 @@
-// const db = require("../models")
-// const Product = db.product
+const { authJwt } = require("../middleware")
 
 module.exports = app => {
     const products = require("../controllers/product.controller");
@@ -7,7 +6,7 @@ module.exports = app => {
     let router = require("express").Router();
 
     //create new Product
-    router.post("/",  products.create);
+    router.post("/", [authJwt.verifyToken, authJwt.isAdmin], products.create);
 
     //retrieve all products
     router.get("/", products.findAll);
@@ -15,14 +14,14 @@ module.exports = app => {
     //retrieve a single product by id
     router.get("/:id", products.findOne);
 
-    //update a tutorial with id
-    router.put("/:id", products.update);
+    //update a product with id
+    router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], products.update);
 
     //delete product by id
-    router.delete("/:id", products.delete);
+    router.delete("/:id",[authJwt.verifyToken, authJwt.isAdmin], products.delete);
 
     //delete all products
-    router.delete("/", products.deleteAll);
+    router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], products.deleteAll);
 
     app.use("/api/test/products", router);
 
