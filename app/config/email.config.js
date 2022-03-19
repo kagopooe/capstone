@@ -29,7 +29,8 @@ module.exports.sendConfirmationEmail = (fullname, email) => {
 };
 
 module.exports.sendDeletionEmail = (fullname, email) => {
-    transport
+    console.log(fullname, email)
+  transport
         .sendMail({
             from: process.env.EMAIL,
             to: email,
@@ -42,6 +43,19 @@ module.exports.sendDeletionEmail = (fullname, email) => {
         })
 }
 
+module.exports.sendUpdateEmail = (fullname, email) => {
+  transport
+    .sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: "PizzaWorld Account Updated",
+      html: `
+              <h2> Hello ${ fullname }</h2>
+                  <p> Your PizzaWorld account details were successfully updated </p>
+                  <p> Explore PizzaWorld further at <a href"#">here</a>!</p>
+      `
+    })
+}
 // const welcomeMsg = {
 //     from: process.env.EMAIL,
 //     to: req.body.email,
