@@ -29,7 +29,6 @@ module.exports.sendConfirmationEmail = (fullname, email) => {
 };
 
 module.exports.sendDeletionEmail = (fullname, email) => {
-    console.log(fullname, email)
   transport
         .sendMail({
             from: process.env.EMAIL,
