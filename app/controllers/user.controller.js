@@ -98,7 +98,7 @@ exports.deleteAll = (req, res) => {
 };
 
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("");
 };
 
 exports.userBoard = (req, res) => {
