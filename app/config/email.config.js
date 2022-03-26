@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
   secure: true,
 });
 
-module.exports.sendConfirmationEmail = (fullname, email) => {
+exports.sendConfirmationEmail = (fullname, email) => {
   transport
     .sendMail({
       from: process.env.EMAIL,
@@ -25,10 +25,10 @@ module.exports.sendConfirmationEmail = (fullname, email) => {
                     <p> Make your first order with us  <a href: "">here</a>!</p>
                     `
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
-module.exports.sendDeletionEmail = (fullname, email) => {
+exports.sendDeletionEmail = (fullname, email) => {
   transport
         .sendMail({
             from: process.env.EMAIL,
@@ -42,7 +42,7 @@ module.exports.sendDeletionEmail = (fullname, email) => {
         })
 }
 
-module.exports.sendUpdateEmail = (fullname, email) => {
+exports.sendUpdateEmail = (fullname, email) => {
   transport
     .sendMail({
       from: process.env.EMAIL,
@@ -55,23 +55,19 @@ module.exports.sendUpdateEmail = (fullname, email) => {
       `
     })
 }
-// const welcomeMsg = {
-//     from: process.env.EMAIL,
-//     to: req.body.email,
-//     subject: "Welcome to PizzaWorld!",
-//     text: "Your PizzaWorld account was registered successfully! We're glad to have you aboard the spaceship"
-// };
 
-// const goodbyeMsg = {
-//     from: process.env.EMAIL,
-//     to: req.body.email,
-//     subject: "PizzWorld Account deletion",
-//     text: "PizzaWorld account successfully deleted. We're sad to see you go :( "
-// }
+exports = sendFormEmail = (fullname, email) => {
+  transport
+    .sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      html: `
+              <h2> Hello ${fullname} </h2>
+              <p>We have received your contact request. Expect a response from one of our customer agents within the next 48 - 72 hours </p>
+          `
+    })
+}
 
-// const updateMsg = {
-//  from: process.env.EMAIL,
-//  to: req.body.email,
-//  subject: "PizzaWorld Account updated!",
-//  text: "Your PizzaWorld account was updated successfully"
-// }
+
+
+

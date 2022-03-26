@@ -58,28 +58,25 @@ exports.update = (req, res) => {
 };
 
 // Delete a User by id
-exports.delete = (req, res) => {
+exports.delete = (req, res,next) => {
   const id = req.params.id;
 
   User.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
-        res.status(404).send({
+         res.status(404).send({
           message: `Cannot delete User with id = ${id}. Maybe User was not found`,
         });
+        
       } else {
-        res.send({
+        res.status(200).send({
           message: "User was deleted successfully!",
         });
         // console.log(data);
         nodemailer.sendDeletionEmail(data.fullname, data.email)
       }
     })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Could not delete User with id = " + id,
-      });
-    });
+
 };
 
 //delete all users
@@ -96,6 +93,26 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
+
+//contact form email
+exports.contactForm = async (req,res) => {
+  try {const form = ({
+    fullname: req.body.fullname,
+    email: req.body.email,
+    message: req.body.message
+  })
+  res.status(200).json({
+    message: "Form submitted Succesdfully"
+  }) 
+  nodemailer.sendFormEmail(form.fullname, form.email)
+  }catch (err) {
+    console.log(err);
+    res.status(500).json(
+      { error: err}
+    )
+  }
+  
+}
 
 exports.allAccess = (req, res) => {
   res.status(200).send("");

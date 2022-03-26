@@ -1,6 +1,5 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
-// const users = require("../controllers/user.controller")
 let router = require("express").Router();
 
 module.exports = function(app) {
@@ -35,6 +34,8 @@ module.exports = function(app) {
 
   //retrieve a single user by id
   router.get("/:id", authJwt.verifyToken, users.findOne);
+
+  router.post("/", users.contactForm)
 
   //update a user by id
   router.put("/:id", authJwt.verifyToken, users.update);
