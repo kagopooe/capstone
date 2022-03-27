@@ -56,11 +56,12 @@ exports.sendUpdateEmail = (fullname, email) => {
     })
 }
 
-exports = sendFormEmail = (fullname, email) => {
+exports.sendFormEmail = (fullname, email) => {
   transport
     .sendMail({
       from: process.env.EMAIL,
       to: email,
+      subject: "Pizza Planet enquiry",
       html: `
               <h2> Hello ${fullname} </h2>
               <p>We have received your contact request. Expect a response from one of our customer agents within the next 48 - 72 hours </p>

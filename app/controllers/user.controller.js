@@ -95,22 +95,22 @@ exports.deleteAll = (req, res) => {
 };
 
 //contact form email
-exports.contactForm = async (req,res) => {
-  try {const form = ({
+exports.contactForm =  (req,res) => {
+  const form = {
     fullname: req.body.fullname,
     email: req.body.email,
     message: req.body.message
-  })
-  res.status(200).json({
-    message: "Form submitted Succesdfully"
-  }) 
-  nodemailer.sendFormEmail(form.fullname, form.email)
-  }catch (err) {
-    console.log(err);
-    res.status(500).json(
-      { error: err}
-    )
+  };
+  if(!req.body)
+  return res.status(400).send({
+    message: "Form not submitted"
+  }); else {
+    res.status(200).send({
+      message: "Form Successfully submitted"
+    })
   }
+nodemailer.sendFormEmail(form.fullname, form.email)
+
   
 }
 
