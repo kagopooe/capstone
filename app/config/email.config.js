@@ -19,9 +19,9 @@ exports.sendConfirmationEmail = (fullname, email) => {
     .sendMail({
       from: process.env.EMAIL,
       to: email,
-      subject: "PizzaWorld Successful Registration",
+      subject: "Pizza Planet Successful Registration",
       html: `   <h2> Hello ${ fullname }!</h2>
-                    <p> Thank you for joining us aboard to PizzaWorld ! </p>
+                    <p> Thank you for joining us aboard to Pizza Planet ! </p>
                     <p> Make your first order with us  <a href: "">here</a>!</p>
                     `
     })
@@ -33,10 +33,10 @@ exports.sendDeletionEmail = (fullname, email) => {
         .sendMail({
             from: process.env.EMAIL,
             to: email,
-            subject: "PizzaWorld Account Deletion",
+            subject: "Pizza Planet Account Deletion",
             html: `
                     <h2> Hello ${ fullname }!</h2>
-                        <p> Your PizzaWorld account was successfully deleted</p>
+                        <p> Your Pizza Planet account was successfully deleted</p>
                         <p> We're sad to see you depart :(
                 `
         })
@@ -47,11 +47,11 @@ exports.sendUpdateEmail = (fullname, email) => {
     .sendMail({
       from: process.env.EMAIL,
       to: email,
-      subject: "PizzaWorld Account Updated",
+      subject: "Pizza Planet Account Updated",
       html: `
               <h2> Hello ${ fullname }</h2>
-                  <p> Your PizzaWorld account details were successfully updated </p>
-                  <p> Explore PizzaWorld further at <a href"#">here</a>!</p>
+                  <p> Your Pizza Planet account details were successfully updated </p>
+                  <p> Explore Pizza Planet further at <a href"#">here</a>!</p>
       `
     })
 }

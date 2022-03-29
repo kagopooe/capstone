@@ -33,7 +33,29 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to PizzaWorld application." });
+  res.json({ message: "Welcome to Pizza Planet application.",
+            routes: {
+              
+              auth: {
+                login: "POST api/auth/signin",
+                register: "POST api/auth/signup",
+                    },
+              users: {
+                getAll: "GET api/test/users",
+                getByID: "GET api/test/users/:id",
+                delete1: "DELETE api/test/users/:id",
+                edit: "PUT api/test/users/:id",
+                contactForm: "POST api/test/users"
+              },
+              products: {
+                getAll: "GET api/test/products",
+                create: "POST api/test/products",
+                get1: "GET api/test/products/:id",
+                delete: "DELETE api/products/:id",
+                edit1: "PUT api/test/products/:id"
+              }
+            }
+  });
 });
 
 // routes
